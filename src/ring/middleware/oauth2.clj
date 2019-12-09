@@ -69,6 +69,7 @@
 (defn- get-access-token
   [{:keys [access-token-uri client-id client-secret basic-auth?]
     :or {basic-auth? false} :as profile} request]
+  (throw (Exception. (str {:basic-auth basic-auth? :request (add-form-credentials {:accept :json, :as  :json, :form-params (request-params profile request)} client-id client-secret)})))
   (format-access-token
    (http/post access-token-uri
      (cond-> {:accept :json, :as  :json,
